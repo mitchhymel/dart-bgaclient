@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:boardgameatlasapi/src/models/game.dart';
 import 'package:http/http.dart';
 import 'package:boardgameatlasapi/boardgameatlasapi.dart';
 
@@ -15,6 +16,7 @@ class BGAClient {
 
   BGAClient({this.clientId, this.clientSecret, this.logger=null,this.userAgent='BGAClient'});
 
+
   Future<BGAResponse> makeGetRequest(String path, Map<String,String> params) async {
     params.putIfAbsent('client_id', () => clientId);
 
@@ -25,12 +27,16 @@ class BGAClient {
       'Accept': 'application/json'
     };
 
+    if (logger != null) {
+      logger.logRequest(uri.toString(), headers, '');
+    }
+
     var response = await get(uri, headers: headers);
 
     var error = null;
     var data = null;
     if (response.statusCode != 200) {
-      error = 400;
+      error = 'TODO: error'; //TODO: error
     }
     else {
       data = jsonDecode(response.body);
@@ -45,4 +51,18 @@ class BGAClient {
     return result;
   }
 
+  Future<List<Game>> search(SearchParams params) async {
+    var resp = await makeGetRequest('search', BGAHelpers.toStrMap(params.toJson()));
+    if (resp.error != null) {
+      return [];
+    }
+    
+    if (resp.data.containsKey('game')) {
+      return [Game.fromJson(resp.data['game'])];
+    }
+    else {
+      List<dynamic> mapList = resp.data['games'];
+      return mapList.map((m) => Game.fromJson(m)).toList();
+    }
+  }
 }

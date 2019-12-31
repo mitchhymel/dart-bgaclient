@@ -8,11 +8,12 @@ var client = new BGAClient(clientId: CLIENT_ID, clientSecret: CLIENT_SECRET);
 
 main() async {
 
-  print('Starting');
-  var params = {
-    'name': 'Wingspan',
-  };
-  var resp = await client.makeGetRequest('search', params);
-  print(resp.data);
-  print('Ending...');
+  var params = SearchParams(
+    categories: ['YyszHun1HP']
+  );
+  var resp = await client.search(params);
+  if (resp.length == 0) {
+    print('Found nothing');
+  }
+  resp.forEach((g) => print(BGAHelpers.getPrettyStringFromMap(g.toJson())));
 }
