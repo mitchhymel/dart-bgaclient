@@ -1,3 +1,4 @@
+import 'package:boardgameatlasapi/src/enums/enums.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'search_params.g.dart';
@@ -8,6 +9,8 @@ class SearchParams {
   static String boolToJson(bool b) => b == null ? null : b ? 'true': 'false';
   static String intToJson(i) => (i == null) ? null : i.toString();
   static String listToJson(List l) => (l == null) ? null : l.join(','); 
+  static String mechListToJson(List<Mechanic> l) => (l == null) ? null : l.map((m) => m.id).join(',');
+  static String catListToJson(List<Category> l) => (l == null) ? null : l.map((c) => c.id).join(',');
 
   @JsonKey(toJson: intToJson)
   final int limit;
@@ -29,10 +32,10 @@ class SearchParams {
   final String designer;
   final String publisher;
   final String artist;
-  @JsonKey(toJson: listToJson)
-  final List<String> mechanics; //TODO: enumize
-  @JsonKey(toJson: listToJson)
-  final List<String> categories; //TODO: enumize
+  @JsonKey(toJson: mechListToJson, fromJson: null)
+  final List<Mechanic> mechanics; //TODO: enumize
+  @JsonKey(toJson: catListToJson, fromJson: null)
+  final List<Category> categories; //TODO: enumize
   final String orderBy; //TODO: enumize
   @JsonKey(toJson: boolToJson)
   final bool ascending;

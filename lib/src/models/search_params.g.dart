@@ -20,8 +20,14 @@ SearchParams _$SearchParamsFromJson(Map<String, dynamic> json) {
     designer: json['designer'] as String,
     publisher: json['publisher'] as String,
     artist: json['artist'] as String,
-    mechanics: (json['mechanics'] as List)?.map((e) => e as String)?.toList(),
-    categories: (json['categories'] as List)?.map((e) => e as String)?.toList(),
+    mechanics: (json['mechanics'] as List)
+        ?.map((e) =>
+            e == null ? null : Mechanic.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    categories: (json['categories'] as List)
+        ?.map((e) =>
+            e == null ? null : Category.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
     orderBy: json['orderBy'] as String,
     ascending: json['ascending'] as bool,
     minPlayers: json['min_players'] as int,
@@ -48,8 +54,8 @@ Map<String, dynamic> _$SearchParamsToJson(SearchParams instance) =>
       'designer': instance.designer,
       'publisher': instance.publisher,
       'artist': instance.artist,
-      'mechanics': SearchParams.listToJson(instance.mechanics),
-      'categories': SearchParams.listToJson(instance.categories),
+      'mechanics': SearchParams.mechListToJson(instance.mechanics),
+      'categories': SearchParams.catListToJson(instance.categories),
       'orderBy': instance.orderBy,
       'ascending': SearchParams.boolToJson(instance.ascending),
       'min_players': SearchParams.intToJson(instance.minPlayers),

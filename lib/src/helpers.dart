@@ -21,4 +21,33 @@ class BGAHelpers {
 
     return newMap;
   }
+
+  static String trimSpecialCharsForEnumName(String str) {
+    // TODO: probably a smarter regex way to do this 
+    return str.replaceAll('(', '')
+              .replaceAll(')', '')
+              .replaceAll('.', '')
+              .replaceAll('/', '_')
+              .replaceAll('-', '_')
+              .replaceAll(' ', '_')
+              .replaceAll("'", '')
+              .replaceAll('&', 'AND')
+              .replaceAll('__', '_')
+              .replaceAll('__', '_');
+  }
+
+  static void generateEnumCodeFromJsonList(String enumClassName, List<Map> maps) {
+    maps.forEach((i) {
+      String name = i['name'];
+      String upperCase = name.toUpperCase();
+      String removedChars = BGAHelpers.trimSpecialCharsForEnumName(upperCase);
+      String enumName = removedChars;
+
+      String id = i['id'];
+      String enumReadableName = i['name'];
+      bool checked = i['checked'];
+      String line = "static const ${enumClassName} ${enumName} = const ${enumClassName}._private('${id}',\"${enumReadableName}\", ${checked});";
+      print(line);
+    });
+  }
 }
