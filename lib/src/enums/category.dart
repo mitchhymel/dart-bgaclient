@@ -17,6 +17,10 @@ class Category {
   const Category._private(this.id, this.name, this.checked);
   factory Category.fromJson(Map<String, dynamic> json) => _$CategoryFromJson(json);
   Map<String, dynamic> toJson() => _$CategoryToJson(this);
+
+  // provided to get json_serializable working, but not advised to use this 
+  // and just treat the class like an enum
+  Category({this.id,this.name,this.checked});
   
 
   static const Category FOURX = const Category._private('85OKv8p5Ow',"4x", false);

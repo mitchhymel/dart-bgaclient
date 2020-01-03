@@ -14,6 +14,10 @@ class Mechanic {
   factory Mechanic.fromJson(Map<String, dynamic> json) => _$MechanicFromJson(json);
   Map<String, dynamic> toJson() => _$MechanicToJson(this);
 
+  // provided to get json_serializable working, but not advised to use this 
+  // and just treat the class like an enum
+  Mechanic({this.id, this.name, this.checked});
+
   static const Mechanic ACTING = const Mechanic._private('n1GtBt35Rd','Acting', false);
   static const Mechanic ACTION_MOVEMENT_PROGRAMMING = const Mechanic._private('PGjmKGi26h','Action / Movement Programming', false);
   static const Mechanic ACTION_POINT_ALLOWANCE_SYSTEM = const Mechanic._private('oeg6wN9Eoc','Action Point Allowance System', false);

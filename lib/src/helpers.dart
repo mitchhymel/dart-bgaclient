@@ -37,6 +37,7 @@ class BGAHelpers {
   }
 
   static void generateEnumCodeFromJsonList(String enumClassName, List<Map> maps) {
+    List<String> mapLines = [];
     maps.forEach((i) {
       String name = i['name'];
       String upperCase = name.toUpperCase();
@@ -47,7 +48,13 @@ class BGAHelpers {
       String enumReadableName = i['name'];
       bool checked = i['checked'];
       String line = "static const ${enumClassName} ${enumName} = const ${enumClassName}._private('${id}',\"${enumReadableName}\", ${checked});";
-      print(line);
+
+      String mapLine = "'${id}': ${enumName}";
+      mapLines.add(mapLine);
+
+      // print(line);
     });
+
+    mapLines.forEach((l) => print(l));
   }
 }
