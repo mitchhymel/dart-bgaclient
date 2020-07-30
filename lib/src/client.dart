@@ -11,7 +11,7 @@ class BGAClient {
   final BGALogger logger;
   final String userAgent;
 
-  static const String AUTHORITY = 'www.boardgameatlas.com';
+  static const String AUTHORITY = 'api.boardgameatlas.com';
   static const String ROOTPATH = 'api';
 
   BGAClient({this.clientId, this.clientSecret, this.logger=null,this.userAgent='BGAClient'});
